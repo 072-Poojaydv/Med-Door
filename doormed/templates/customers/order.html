@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/order.css')}}">
+{% endblock %}
+{% block content %}
+
+
+    {% include 'navbar.html' %}
+
+    <main class="container1">
+        {% if carts %}
+        <section class="left">
+           <div class="text" style="text-align: center;">
+              {% include 'messages.html' %}
+           </div>
+           {% if shop %}
+           <div class="shop-name" style="text-align: center;">
+               <h3>
+                   Order from <b style="color: green;">{{shop.shop_name}}</b></h3>
+               <p>Phone No: {{shop.number}}</p>
+           </div>
+           {% endif %}
+           <div class="details">
+               <div id="all">
+               <p>Invoice No: </p>
+               <b>{{order.invoice}}</b>
+               </div>
+               <div id="all">
+               <p>Order Date: </p>
+               <b>{{order.order_date.strftime("%d-%m-%Y")}}</b>
+               </div>
+               <div id="all">
+               <p>Status: </p>
+               <b>{{order.status}}</b>
+            </div>
+            <div id="all">
+               <p>Delivery Address: </p>
+               <b>{{user.address}}</b>
+            </div>
+            <div id="all">
+               <p>Pincode: </p>
+               <b>{{user.pincode}}</b>
+               </div>
+               <div id="all">
+               <p>Mode of payment: </p>
+               <b>Cash on Delivery</b>
+               </div>
+               <div id="all">
+               <p>Total Amount:</p>
+               <b>{{order.total}}</b>
+               </div>
+           </div>
+           <a style="padding: 1rem; margin-left: 5rem;" href="/main/{{user.id}}/account">Purchase History</a>
+        </section>
+        <section class="right">
+            <p class="heading">Order summary</p>
+           <div class="orders">
+            <div class="order">
+                <div class="name">
+                    <h5 style="color: black;">Name</h5>
+                </div>
+                <div class="quantity">
+                    <h5>Quantity</h5>
+                </div>
+                <div class="price">
+                    <h5>Price(Rs)</h5>
+                </div>
+            </div>
+            
+            {% for product, cart in ord_and_prod %}
+          
+                       <div class="order">
+                           <div class="name">
+                               <h4>  {{product.name}}</h4>
+                           </div>
+                           <div class="quantity">
+                               <h4>{{cart.quantity}}</h4>
+                           </div>
+                           <div class="price">
+                               <h4>{{product.price * cart.quantity}}</h4>
+                           </div>
+                       </div>
+
+                       {% endfor %}
+                  
+                    
+
+                    
+  
+                    </div>
+
+                   
+
+        </section>
+        {% endif %}
+    </main>
+
+{% endblock %}
